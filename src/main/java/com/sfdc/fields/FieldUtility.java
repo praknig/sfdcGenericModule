@@ -1,8 +1,10 @@
 package com.sfdc.fields;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
+import com.sfdc.fields.PropertyValue.PROPERTY_VALUES;
 import com.sfdc.fields.wrappers.*;
 import com.sfdc.util.Constants;
 
@@ -19,6 +21,7 @@ public class FieldUtility {
 		this.objectAPI = objectAPI;
 		this.baseUrl = baseUrl;
 		mapFieldAPIAndField = new HashMap<String,Field>();
+		fetchFieldDetails();
 	}
 	
 	private void fetchFieldDetails()
@@ -42,4 +45,18 @@ public class FieldUtility {
 		for(Field field:fields.getFields())
 			mapFieldAPIAndField.put(field.getName(), field);
 	}
+	public ArrayList<String> getFieldProperty(PropertyValue.PROPERTY_VALUES property)
+	{
+		ArrayList<String> propertyValues = new ArrayList<String>();
+		if(property == PROPERTY_VALUES.CUSTOM_FIELD_API_NAME)
+		{
+			for(Field field:mapFieldAPIAndField.values())
+			{
+				propertyValues.add(field.getName());
+			}
+				
+		}
+		return propertyValues;
+	}
+	
 }
